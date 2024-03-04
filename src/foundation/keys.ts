@@ -1,4 +1,4 @@
-const localStotageKeys = ['point', 'pointId'] as const;
+const localStotageKeys = ['point', 'pointId', 'pathes'] as const;
 
 export const localStorageKeyHashSet = Object.fromEntries(
   localStotageKeys.map((k) => [k, k])

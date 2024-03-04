@@ -1,4 +1,4 @@
-const recoilKeys = ['points', 'pointsAddSelector'] as const;
+const recoilKeys = ['points', 'selectPointIds', 'pathes'] as const;
 
 export const recoilKeyHashSet = Object.fromEntries(
   recoilKeys.map((k) => [k, k])

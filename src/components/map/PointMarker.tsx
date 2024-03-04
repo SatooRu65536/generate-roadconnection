@@ -5,6 +5,7 @@ import triangle from '@/assets/triangle.svg';
 import styled from 'styled-components';
 import { usePointsMutators } from '@/store/points';
 import { ChangeEvent } from 'react';
+import { useSelectPointsIdsMutators } from '@/store/selectPoints';
 
 const PopupTitle = styled.h3`
   text-align: center;
@@ -19,6 +20,7 @@ type PointMarkerProps = {
 const PointMarker = (props: PointMarkerProps) => {
   const { point } = props;
   const { dragPoint, editDesc, deletePoint } = usePointsMutators();
+  const { selectPoint } = useSelectPointsIdsMutators();
 
   const markerIcon = icon({
     iconUrl: triangle,
@@ -31,6 +33,9 @@ const PointMarker = (props: PointMarkerProps) => {
     dragend: (e) => {
       const latlng = e.target.getLatLng();
       dragPoint(point.id, latlng.lat, latlng.lng);
+    },
+    contextmenu: () => {
+      selectPoint(point.id);
     },
   };
 
