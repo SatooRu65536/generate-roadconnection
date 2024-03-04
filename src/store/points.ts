@@ -33,5 +33,25 @@ export const usePointsMutators = () => {
     });
   };
 
-  return { addPoint } as const;
+  const dragPoint = (id: number, lat: number, lng: number) => {
+    setPoints((prev) => {
+      const newPoints = prev.map((p) => {
+        if (p.id === id) return { ...p, lat, lng };
+        return p;
+      });
+      return newPoints;
+    });
+  };
+
+  const editDesc = (id: number, desc: string) => {
+    setPoints((prev) => {
+      const newPoints = prev.map((p) => {
+        if (p.id === id) return { ...p, desc };
+        return p;
+      });
+      return newPoints;
+    });
+  };
+
+  return { addPoint, dragPoint, editDesc } as const;
 };

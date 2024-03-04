@@ -4,7 +4,7 @@ import { ReactElement } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import InnerMap from './InnerMap';
 import styled from 'styled-components';
-import PointMarker from './Point';
+import PointMarker from './PointMarker';
 import { usePointsState } from '@/store/points';
 
 const CustomMapContainer = styled(MapContainer)`
