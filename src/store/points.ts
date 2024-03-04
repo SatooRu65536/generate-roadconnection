@@ -22,7 +22,10 @@ export const usePointsMutators = () => {
 
   const addPoint = (lat: number, lng: number) => {
     setPoints((prev) => {
-      const maxId = prev.reduce((acc, cur) => (acc > cur.id ? acc : cur.id), 0);
+      const maxId = prev.reduce(
+        (acc, cur) => (acc > cur.id ? acc : cur.id),
+        100
+      );
       const newPoint: Point = {
         id: maxId + 1,
         lat,
@@ -53,5 +56,12 @@ export const usePointsMutators = () => {
     });
   };
 
-  return { addPoint, dragPoint, editDesc } as const;
+  const deletePoint = (id: number) => {
+    setPoints((prev) => {
+      const newPoints = prev.filter((p) => p.id !== id);
+      return newPoints;
+    });
+  };
+
+  return { addPoint, dragPoint, editDesc, deletePoint } as const;
 };

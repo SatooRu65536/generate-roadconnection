@@ -10,13 +10,15 @@ const PopupTitle = styled.h3`
   text-align: center;
 `;
 
+const DeleteButton = styled.button``;
+
 type PointMarkerProps = {
   point: Point;
 };
 
 const PointMarker = (props: PointMarkerProps) => {
   const { point } = props;
-  const { dragPoint, editDesc } = usePointsMutators();
+  const { dragPoint, editDesc, deletePoint } = usePointsMutators();
 
   const markerIcon = icon({
     iconUrl: triangle,
@@ -30,6 +32,11 @@ const PointMarker = (props: PointMarkerProps) => {
       const latlng = e.target.getLatLng();
       dragPoint(point.id, latlng.lat, latlng.lng);
     },
+  };
+
+  const deletehandle = () => {
+    const isDelete = window.confirm('削除しますか？');
+    if (isDelete) deletePoint(point.id);
   };
 
   const descHandle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +60,7 @@ const PointMarker = (props: PointMarkerProps) => {
               value={point.desc}
               onChange={descHandle}
             />
+            <DeleteButton onClick={deletehandle}>削除</DeleteButton>
           </Popup>
         </Marker>
       )}
