@@ -19,6 +19,12 @@ export const useSelectPointsIdsMutators = () => {
 
   const selectPoint = (id: number) => {
     const clonedIds = structuredClone(selects);
+
+    if (clonedIds.includes(id)) {
+      unselectPoint(id);
+      return;
+    }
+
     clonedIds.push(id);
     if (clonedIds.length >= 2) clonedIds.shift();
     setSelectPointIds(clonedIds);
@@ -30,6 +36,7 @@ export const useSelectPointsIdsMutators = () => {
       const clonedIds = structuredClone(prev);
       const index = clonedIds.indexOf(id);
       if (index !== -1) clonedIds.splice(index, 1);
+      if (clonedIds.length < 2) clonedIds.push(0);
       return clonedIds;
     });
   };

@@ -8,6 +8,7 @@ import PointMarker from './PointMarker';
 import { usePointsState } from '@/store/points';
 import { usePathesState } from '@/store/pathes';
 import Route from './Route';
+import { useSelectPointsIdsState } from '@/store/selectPoints';
 
 const CustomMapContainer = styled(MapContainer)`
   height: 100%;
@@ -17,6 +18,7 @@ const CustomMapContainer = styled(MapContainer)`
 const Map = (): ReactElement => {
   const points = usePointsState();
   const pathes = usePathesState();
+  const selects = useSelectPointsIdsState();
 
   return (
     <CustomMapContainer
@@ -36,7 +38,7 @@ const Map = (): ReactElement => {
       ))}
 
       {points.map((p) => (
-        <PointMarker key={p.id} point={p} />
+        <PointMarker key={p.id} point={p} isSelect={selects[1] === p.id} />
       ))}
     </CustomMapContainer>
   );

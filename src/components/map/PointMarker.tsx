@@ -2,6 +2,7 @@ import { Marker, Popup } from 'react-leaflet';
 import { Point } from '@/type';
 import { LeafletEventHandlerFnMap, icon } from 'leaflet';
 import triangle from '@/assets/triangle.svg';
+import triangleSelecte from '@/assets/triangleSelect.svg';
 import styled from 'styled-components';
 import { usePointsMutators } from '@/store/points';
 import { ChangeEvent } from 'react';
@@ -15,15 +16,16 @@ const DeleteButton = styled.button``;
 
 type PointMarkerProps = {
   point: Point;
+  isSelect: boolean;
 };
 
 const PointMarker = (props: PointMarkerProps) => {
-  const { point } = props;
+  const { point, isSelect } = props;
   const { dragPoint, editDesc, deletePoint } = usePointsMutators();
   const { selectPoint } = useSelectPointsIdsMutators();
 
   const markerIcon = icon({
-    iconUrl: triangle,
+    iconUrl: isSelect ? triangleSelecte : triangle,
     iconSize: [20, 20],
     iconAnchor: [10, 20],
     popupAnchor: [0, -20],
