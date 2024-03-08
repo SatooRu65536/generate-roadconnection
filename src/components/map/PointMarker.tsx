@@ -20,12 +20,12 @@ type PointMarkerProps = {
 };
 
 const PointMarker = (props: PointMarkerProps) => {
-  const { point, isSelect } = props;
+  const { point } = props;
   const { dragPoint, editDesc, deletePoint } = usePointsMutators();
   const { selectPoint } = useSelectPointsIdsMutators();
 
   const markerIcon = icon({
-    iconUrl: isSelect ? triangleSelecte : triangle,
+    iconUrl: point.desc ? triangleSelecte : triangle,
     iconSize: [20, 20],
     iconAnchor: [10, 20],
     popupAnchor: [0, -20],
