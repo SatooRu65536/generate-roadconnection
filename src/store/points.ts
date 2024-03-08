@@ -3,6 +3,7 @@ import { Point } from '@/type';
 import { recoilKeyHashSet } from './keys';
 import { localStorageKeyHashSet } from '@/foundation/keys';
 import { getLocalStorage, setLocalStorage } from '@/foundation/localstorage';
+import { useDefaultDescState } from './defaultDesc';
 
 const pointsKey = localStorageKeyHashSet.point;
 const pointsState = atom<Point[]>({
@@ -19,6 +20,7 @@ export const usePointsState = () => {
 
 export const usePointsMutators = () => {
   const setPoints = useSetRecoilState(pointsState);
+  const defaultDesc = useDefaultDescState();
 
   const addPoint = (lat: number, lng: number) => {
     setPoints((prev) => {
@@ -30,7 +32,7 @@ export const usePointsMutators = () => {
         id: maxId + 1,
         lat,
         lng,
-        desc: '',
+        desc: defaultDesc,
       };
       return [...prev, newPoint];
     });
