@@ -1,6 +1,7 @@
+import { usePathesMutators } from '@/store/pathes';
 import { usePointsState } from '@/store/points';
 import { Path, Point } from '@/type';
-import { LatLngExpression } from 'leaflet';
+import { LatLngExpression, LeafletEventHandlerFnMap } from 'leaflet';
 import { ReactElement } from 'react';
 import { Polyline } from 'react-leaflet';
 
@@ -17,12 +18,17 @@ const getPolyline = (path: Path, points: Point[]): LatLngExpression[] => {
 
 const Route = (props: PathProps): ReactElement => {
   const { path } = props;
+  const { deletePath } = usePathesMutators();
   const points = usePointsState();
   const polyline = getPolyline(path, points);
 
+  const eventHandlers: LeafletEventHandlerFnMap = {
+    click: () => deletePath(path.id),
+  };
+
   return (
     <>
-      <Polyline positions={polyline} />
+      <Polyline eventHandlers={eventHandlers} positions={polyline} />
     </>
   );
 };
