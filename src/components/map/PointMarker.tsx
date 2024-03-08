@@ -1,8 +1,6 @@
 import { Marker, Popup } from 'react-leaflet';
 import { Point } from '@/type';
 import { LeafletEventHandlerFnMap, icon } from 'leaflet';
-import triangle from '@/assets/triangle.svg';
-import triangleSelecte from '@/assets/triangleSelect.svg';
 import styled from 'styled-components';
 import { usePointsMutators } from '@/store/points';
 import { ChangeEvent } from 'react';
@@ -19,13 +17,33 @@ type PointMarkerProps = {
   isSelect: boolean;
 };
 
+function triangle(fill: string, stroke: string) {
+  const svg = `
+    <svg width="36" height="30" viewBox="0 0 36 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+          d="M34.4545 0.500004L18 29L1.54552 0.500001L34.4545 0.500004Z"
+          fill="${fill}"
+          stroke="${stroke}"
+      />
+    </svg>
+  `;
+  return `data:image/svg+xml,${svg}`;
+}
+
+function getMarkerImage(isSelect: boolean, desc: string) {
+  if (isSelect) return triangle('black', 'yellow');
+  if (desc === 'facility') return triangle('royalblue', 'yellow');
+  if (desc.includes('entrance')) return triangle('green', 'yellow');
+  return triangle('yellow', 'black');
+}
+
 const PointMarker = (props: PointMarkerProps) => {
-  const { point } = props;
+  const { point, isSelect } = props;
   const { dragPoint, editDesc, deletePoint } = usePointsMutators();
   const { selectPoint } = useSelectPointsIdsMutators();
 
   const markerIcon = icon({
-    iconUrl: point.desc ? triangleSelecte : triangle,
+    iconUrl: getMarkerImage(isSelect, point.desc),
     iconSize: [20, 20],
     iconAnchor: [10, 20],
     popupAnchor: [0, -20],
